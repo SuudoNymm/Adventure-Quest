@@ -18,7 +18,7 @@ public class SelectionManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))//
         {
             var selectionTransform = hit.transform;
             if (selectionTransform.GetComponent<InteractableObject>())
@@ -26,12 +26,17 @@ public class SelectionManager : MonoBehaviour
                 interaction_text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
                 interaction_Info_UI.SetActive(true);
             }
-            else
+            else // if the object doesn't have the InteractableObject script, hide the UI
             {
                 interaction_Info_UI.SetActive(false);
             }
         }
+        else// if the raycast doesn't hit anything, hide the UI
+        {
+            interaction_Info_UI.SetActive(false);
+        }
     }
+
 }
 
 
