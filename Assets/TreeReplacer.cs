@@ -1,3 +1,6 @@
+﻿// Tree Replacer created by Seta
+// https://www.youtube.com/@SetaLevelDesign
+// Licence: Creative Commons
 using System.Collections.Generic;
 using UnityEngine;
 
