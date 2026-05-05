@@ -9,8 +9,18 @@ public class InventorySystem : MonoBehaviour
     public static InventorySystem Instance { get; set; }
 
     public GameObject inventoryScreenUI;
+
+    public List<GameObject> slotList = new List<GameObject>();
+
+    public List<string> itemList = new List<string>();
+
+    private GameObject itemToAdd;
+
+    private GameObject whatSlotToEquip;
+
     public bool isOpen;
 
+    //public bool isFull;
 
     private void Awake()
     {
@@ -28,6 +38,20 @@ public class InventorySystem : MonoBehaviour
     void Start()
     {
         isOpen = false;
+        
+
+        PopulateteSlotList();
+    }
+
+    private void PopulateteSlotList()
+    {
+        foreach (Transform child in inventoryScreenUI.transform)
+        {
+            if (child.CompareTag("Slot"))
+            {
+                slotList.Add(child.gameObject);
+            }
+        }
     }
 
 
@@ -51,4 +75,55 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public void AddItemToInventory(string itemName)
+    {
+          whatSlotToEquip = FindNextSlot();
+
+          itemToAdd = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
+
+          itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+
+          itemList.Add(itemName);
+        
+    }
+
+    private GameObject FindNextSlot() //Finds the next available slot by checking each slot in the slot list and returning the first one that is empty (has no child objects). If all slots are full, it returns a new GameObject (which should not happen if the inventory is properly managed).
+    {
+        foreach (GameObject slot in slotList)
+        {
+            if (slot.transform.childCount == 0)
+            {
+                return slot;
+            }
+        }
+
+        return new GameObject();
+
+    }
+
+    public bool CheckIfFull() //Checks if the inventory is full by counting how many slots are occupied and comparing it to the total number of slots.
+    {
+        int count = 0;
+
+        foreach (GameObject slot in slotList) {
+
+            if (slot.transform.childCount > 0)
+            {
+                count++;
+            }
+
+        }
+
+        if (count >= slotList.Count)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }
+

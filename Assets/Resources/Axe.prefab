@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2039109381831448595}
   - component: {fileID: 6529709134410131318}
   m_Layer: 5
-  m_Name: Axe_INV
+  m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
