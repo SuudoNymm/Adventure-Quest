@@ -206,7 +206,7 @@ public class FirstPersonController : MonoBehaviour
 
         // Control camera movement
 
-        if(InventorySystem.Instance.isOpen == false)
+        if(!InventorySystem.Instance.isOpen && !CraftingSystem.Instance.isOpen)
         {
             if (cameraCanMove)
             {
