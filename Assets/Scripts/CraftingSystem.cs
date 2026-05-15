@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +20,15 @@ public class CraftingSystem : MonoBehaviour
 
 
     //Required Items for Crafting
-    Text AxeReq1, AxeReq2;
+    TextMeshPro AxeReq1, AxeReq2;
 
     public bool isOpen;
+
+    //Blueorints for items to be crafted
+
+    public ItemBlueprint axeBlueprint = new ItemBlueprint("Axe", "Stone", 3, "Wood", 3, 2);
+
+
     public static CraftingSystem Instance { get; set; }
 
     private void Awake()
@@ -44,27 +51,38 @@ public class CraftingSystem : MonoBehaviour
         toolsBTN.onClick.AddListener(delegate { OpenToolsCategory();});
 
         //Axe Crafting
-        AxeReq1 = toolScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<Text>();
-        AxeReq2 = toolScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<Text>();
+        AxeReq1 = toolScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<TextMeshPro>();
+        AxeReq2 = toolScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<TextMeshPro>();
 
         craftAxeBTN = toolScreenUI.transform.Find("Axe").transform.Find("Button").GetComponent<Button>();
-        craftAxeBTN.onClick.AddListener(delegate { CraftAnyItem(); });
+        craftAxeBTN.onClick.AddListener(delegate { CraftAnyItem(axeBlueprint); });
 
     }
 
-    void CraftAnyItem()
+    void CraftAnyItem(ItemBlueprint blueprintToCraft)
     {
-        if (inventoryItemList.Contains("Wood") && inventoryItemList.Contains("Stone"))
+        InventorySystem.Instance.AddItemToInventory(blueprintToCraft.itemName);
+
+
+        
+        if (blueprintToCraft.numOfRequirments == 1)
         {
-            inventoryItemList.Remove("Wood");
-            inventoryItemList.Remove("Stone");
-            inventoryItemList.Add("Axe");
-            Debug.Log("Crafted an Axe!");
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req1, blueprintToCraft.Req1Amount);
+
         }
-        else
+        else if (blueprintToCraft.numOfRequirments == 2)
         {
-            Debug.Log("You don't have the required items to craft an Axe.");
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req1, blueprintToCraft.Req1Amount);
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req2, blueprintToCraft.Req2Amount);
         }
+
+        
+
+
+        InventorySystem.Instance.ReCalculateList();
+
+
+        RefreshNeededItems();
     }
 
     void OpenToolsCategory()
@@ -76,6 +94,10 @@ public class CraftingSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        
+
         if (Input.GetKeyDown(KeyCode.C) && !isOpen)
         {
 
@@ -89,9 +111,53 @@ public class CraftingSystem : MonoBehaviour
         {
             crafting_UI.SetActive(false);
             toolScreenUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+
+            if (!InventorySystem.Instance.isOpen)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             isOpen = false;
+
         }
 
+        RefreshNeededItems();
+
+    }
+
+    private void RefreshNeededItems()
+    {
+        int stoneCount = 0;
+        int woodCount = 0;
+
+        inventoryItemList = InventorySystem.Instance.itemList;
+
+        foreach (string itemName in inventoryItemList)
+        {
+            switch (itemName)
+            {
+                case "Stone":
+                    stoneCount++;
+                    break;
+                case "Wood":
+                    woodCount++;
+                    break;
+            }
+            
+        
+        }
+
+        //Axe
+
+        AxeReq1.text = "Stone: " + stoneCount + "/3";
+        AxeReq2.text = "Wood: " + woodCount + "/3";
+
+        if(stoneCount >= 3 && woodCount >= 3)
+        {
+            craftAxeBTN.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftAxeBTN.gameObject.SetActive(false);
+        }
     }
 }
