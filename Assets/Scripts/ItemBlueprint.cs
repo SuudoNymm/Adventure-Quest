@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class ItemBlueprint : MonoBehaviour
+[System.Serializable]
+public class ItemBlueprint
 {
     public string itemName;
 

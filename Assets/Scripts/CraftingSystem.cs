@@ -1,8 +1,7 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CraftingSystem : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class CraftingSystem : MonoBehaviour
 
 
     //Required Items for Crafting
-    TextMeshPro AxeReq1, AxeReq2;
+    TextMeshProUGUI AxeReq1, AxeReq2;
 
     public bool isOpen;
 
@@ -51,8 +50,8 @@ public class CraftingSystem : MonoBehaviour
         toolsBTN.onClick.AddListener(delegate { OpenToolsCategory();});
 
         //Axe Crafting
-        AxeReq1 = toolScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<TextMeshPro>();
-        AxeReq2 = toolScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<TextMeshPro>();
+        AxeReq1 = toolScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<TextMeshProUGUI>();
+        AxeReq2 = toolScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<TextMeshProUGUI>();
 
         craftAxeBTN = toolScreenUI.transform.Find("Axe").transform.Find("Button").GetComponent<Button>();
         craftAxeBTN.onClick.AddListener(delegate { CraftAnyItem(axeBlueprint); });
@@ -94,10 +93,6 @@ public class CraftingSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        
-
         if (Input.GetKeyDown(KeyCode.C) && !isOpen)
         {
 
@@ -120,7 +115,10 @@ public class CraftingSystem : MonoBehaviour
 
         }
 
-        RefreshNeededItems();
+        if (isOpen)
+        {
+            RefreshNeededItems();
+        }
 
     }
 
@@ -148,16 +146,16 @@ public class CraftingSystem : MonoBehaviour
 
         //Axe
 
-        AxeReq1.text = "Stone: " + stoneCount + "/3";
-        AxeReq2.text = "Wood: " + woodCount + "/3";
+        if (AxeReq1 != null) AxeReq1.text = "Stone: " + stoneCount + "/3";
+        if (AxeReq2 != null) AxeReq2.text = "Wood: " + woodCount + "/3";
 
         if(stoneCount >= 3 && woodCount >= 3)
         {
-            craftAxeBTN.gameObject.SetActive(true);
+            if (craftAxeBTN != null) craftAxeBTN.gameObject.SetActive(true);
         }
         else
         {
-            craftAxeBTN.gameObject.SetActive(false);
+            if (craftAxeBTN != null) craftAxeBTN.gameObject.SetActive(false);
         }
     }
 }

@@ -1,0 +1,23 @@
+{
+    "asset": "84f0ee96ad97e0141a8cf8a45c6b5170",
+    "fileName": "019e297b-8fcf-7846-82ff-894535da1131.glb",
+    "prompt": "a stylized low poly grey stone, matching the reference image",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "219f5502ae12d8047a077799e6a97a3c",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

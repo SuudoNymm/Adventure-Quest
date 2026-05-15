@@ -13,8 +13,22 @@ public class InteractableObject : MonoBehaviour
         return ItemName;
     }
 
-    private void Update()
+    private void Start()
     {
+        // Check if player is already in range (e.g. if spawned right next to player)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2f); // 2f is the radius I set earlier
+        foreach (var col in colliders)
+        {
+            if (col.CompareTag("Player"))
+            {
+                PlayerInRange = true;
+                break;
+            }
+        }
+    }
+
+    private void Update()
+{
         if (Input.GetKeyDown(KeyCode.Mouse0) && PlayerInRange)
         {
             if (!InventorySystem.Instance.CheckIfFull())

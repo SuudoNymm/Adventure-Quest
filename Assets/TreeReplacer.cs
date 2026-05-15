@@ -1,4 +1,4 @@
-﻿// Tree Replacer created by Seta
+// Tree Replacer created by Seta
 // https://www.youtube.com/@SetaLevelDesign
 // Licence: Creative Commons
 using System.Collections.Generic;
@@ -109,21 +109,25 @@ public class TreeReplacer : MonoBehaviour
 
     private Vector3Int WorldToCell(Vector3 pos) => new Vector3Int(Mathf.FloorToInt(pos.x / cellSize), 0, Mathf.FloorToInt(pos.z / cellSize)); //convert world pos to grid cell index
 
+    public void PerformRaycastReplacement(Ray ray)
+    {
+        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance)) return;
+
+        var target = FindNearestTree(hit.point, radiusFromHitPoint);
+        if (target == null) return;
+
+        string treeName = tData.treePrototypes[target.original.prototypeIndex].prefab.name;
+        if (!replacementDict.TryGetValue(treeName, out var prefab) || prefab == null) return;
+
+        ReplaceTreeWithPrefab(target, prefab);
+    }
+
     private void TryReplaceTree()
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward); //create a ray starting from the player camera position pointing forward
-
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance)) return; //cast the ray into the world up to "interactionDistance", stop if nothing was hit
-
-        var target = FindNearestTree(hit.point, radiusFromHitPoint); //find the nearest tree around the hit point within the radiusFromHitPoint value
-        if (target == null) return; //stop if no tree found
-
-        string treeName = tData.treePrototypes[target.original.prototypeIndex].prefab.name; //get the tree prototype name
-        if (!replacementDict.TryGetValue(treeName, out var prefab) || prefab == null) return; //check if there is a replacement prefab defined for this tree type on list
-
-        ReplaceTreeWithPrefab(target, prefab); //replace tree with the replacement prefab
+        PerformRaycastReplacement(ray);
     }
-    private TreeRef FindNearestTree(Vector3 point, float maxDistance)
+private TreeRef FindNearestTree(Vector3 point, float maxDistance)
     {
         TreeRef closest = null; //this will hold the closest tree found
         float minDist = maxDistance; //start with the maximum allowed distance

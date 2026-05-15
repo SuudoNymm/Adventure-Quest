@@ -1,0 +1,23 @@
+{
+    "asset": "0c83c11971304984e96090d28e462ab5",
+    "fileName": "019e297b-3ede-7483-a10f-86c723b933ac.glb",
+    "prompt": "a stylized low poly wooden stick, matching the reference image",
+    "negativePrompt": "",
+    "model": "model3d-tripo-p1",
+    "modelName": "Tripo P1",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "promptImageReferenceGuid": "8594299c0496a844da057006e82d1752",
+    "modelReferenceGuid": "",
+    "multiviewFrontGuid": "",
+    "multiviewBackGuid": "",
+    "multiviewLeftGuid": "",
+    "multiviewRightGuid": "",
+    "multiviewTopGuid": "",
+    "multiviewBottomGuid": "",
+    "multiviewLeftFrontGuid": "",
+    "multiviewRightFrontGuid": "",
+    "faceLimit": -1
+}

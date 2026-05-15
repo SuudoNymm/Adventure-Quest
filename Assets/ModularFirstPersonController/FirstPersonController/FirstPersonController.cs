@@ -1,4 +1,4 @@
-﻿// CHANGE LOG
+// CHANGE LOG
 // 
 // CHANGES || version VERSION
 //
@@ -156,12 +156,12 @@ public class FirstPersonController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if(crosshair)
+        if(crosshair && crosshairObject != null)
         {
             crosshairObject.sprite = crosshairImage;
             crosshairObject.color = crosshairColor;
         }
-        else
+        else if (crosshairObject != null)
         {
             crosshairObject.gameObject.SetActive(false);
         }
@@ -412,7 +412,7 @@ public class FirstPersonController : MonoBehaviour
                         Crouch();
                     }
 
-                    if (hideBarWhenFull && !unlimitedSprint)
+                    if (hideBarWhenFull && !unlimitedSprint && sprintBarCG != null)
                     {
                         sprintBarCG.alpha += 5 * Time.deltaTime;
                     }
@@ -425,7 +425,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 isSprinting = false;
 
-                if (hideBarWhenFull && sprintRemaining == sprintDuration)
+                if (hideBarWhenFull && sprintRemaining == sprintDuration && sprintBarCG != null)
                 {
                     sprintBarCG.alpha -= 3 * Time.deltaTime;
                 }
