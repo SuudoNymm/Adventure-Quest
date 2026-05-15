@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9079812178268257998}
   - component: {fileID: 6882379982768927072}
   - component: {fileID: 3678246029288496743}
+  - component: {fileID: 8621065578225131174}
   m_Layer: 0
   m_Name: Wood
   m_TagString: Untagged
@@ -101,3 +102,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fde84c690476074686ac6b5d9dac423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragDrop
+--- !u!114 &8621065578225131174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013332645421718832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ab23e39d92c4946b7223cd08e33bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  isTrashable: 0
+  thisName: Wood
+  thisDescription: A wooden stick.
+  thisFunctionality: Crafting material
+  isConsumable: 0
+  healthEffect: 0
+  caloriesEffect: 0
+  isTool: 0
+  itemPrefab: {fileID: 0}

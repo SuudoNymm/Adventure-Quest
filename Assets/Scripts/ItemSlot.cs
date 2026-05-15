@@ -5,19 +5,37 @@ using UnityEngine.EventSystems;
 
 
 
-public class ItemSlot : MonoBehaviour, IDropHandler
+public class ItemSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
 
     public GameObject Item
     {
         get
         {
-            if (transform.childCount > 0)
+            foreach (Transform child in transform)
             {
-                return transform.GetChild(0).gameObject;
+                if (child.name != "SlotNumber")
+                {
+                    return child.gameObject;
+                }
             }
 
             return null;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            if (Item == null)
+            {
+                // Check if this slot is a quick slot
+                if (InventorySystem.Instance.quickSlotList.Contains(gameObject))
+                {
+                    InventorySystem.Instance.UnequipItem();
+                }
+            }
         }
     }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1707079334798606018}
   - component: {fileID: -2039109381831448595}
   - component: {fileID: 6529709134410131318}
+  - component: {fileID: 3994570891870705951}
   m_Layer: 5
   m_Name: Axe
   m_TagString: Untagged
@@ -101,3 +102,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &3994570891870705951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7894687978932676737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ab23e39d92c4946b7223cd08e33bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  isTrashable: 0
+  thisName: Axe
+  thisDescription: A tool for chopping wood.
+  thisFunctionality: Chopping
+  isConsumable: 0
+  healthEffect: 0
+  caloriesEffect: 0
+  isTool: 1
+  itemPrefab: {fileID: 6618725628355234377, guid: 42ac2a24f3ee58448916f745ce79c5ee, type: 3}

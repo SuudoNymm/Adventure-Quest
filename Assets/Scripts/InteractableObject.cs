@@ -5,18 +5,24 @@ using UnityEngine;
 public class InteractableObject : MonoBehaviour
 {
     public string ItemName;
+    public int Amount = 1;
+    public bool canBePickedUp = true;
 
     public bool PlayerInRange;
 
     public string GetItemName()
     {
+        if (Amount > 1)
+        {
+            return ItemName + " x" + Amount;
+        }
         return ItemName;
     }
 
     private void Start()
     {
         // Check if player is already in range (e.g. if spawned right next to player)
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 2f); // 2f is the radius I set earlier
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2f); 
         foreach (var col in colliders)
         {
             if (col.CompareTag("Player"))
@@ -28,12 +34,12 @@ public class InteractableObject : MonoBehaviour
     }
 
     private void Update()
-{
-        if (Input.GetKeyDown(KeyCode.Mouse0) && PlayerInRange)
+    {
+        if (canBePickedUp && Input.GetKeyDown(KeyCode.Mouse0) && PlayerInRange)
         {
             if (!InventorySystem.Instance.CheckIfFull())
             {
-                InventorySystem.Instance.AddItemToInventory(ItemName);
+                InventorySystem.Instance.AddItemToInventory(ItemName, Amount);
 
                 Destroy(gameObject);
             }

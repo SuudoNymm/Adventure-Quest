@@ -109,8 +109,26 @@ public class TreeReplacer : MonoBehaviour
 
     private Vector3Int WorldToCell(Vector3 pos) => new Vector3Int(Mathf.FloorToInt(pos.x / cellSize), 0, Mathf.FloorToInt(pos.z / cellSize)); //convert world pos to grid cell index
 
-    public void PerformRaycastReplacement(Ray ray)
+    public string GetTargetName(Ray ray)
     {
+        // Use a slightly longer distance for names than interaction if needed, 
+        // but here we use 15f to match SelectionManager's hover distance.
+        if (!Physics.Raycast(ray, out RaycastHit hit, 15f)) return null;
+
+        var target = FindNearestTree(hit.point, radiusFromHitPoint);
+        if (target == null) return null;
+
+        string treeName = tData.treePrototypes[target.original.prototypeIndex].prefab.name;
+        if (!replacementDict.ContainsKey(treeName)) return null;
+
+        if (treeName == "PT_Generic_Rock_01") return "Stone";
+        if (treeName == "PT_Pine_Tree_03_green") return "Tree";
+
+        return "Interactable";
+    }
+
+    public void PerformRaycastReplacement(Ray ray)
+{
         if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance)) return;
 
         var target = FindNearestTree(hit.point, radiusFromHitPoint);

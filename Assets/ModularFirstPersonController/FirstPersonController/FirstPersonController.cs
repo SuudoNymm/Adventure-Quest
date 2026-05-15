@@ -41,7 +41,7 @@ public class FirstPersonController : MonoBehaviour
 
     #region Camera Zoom Variables
 
-    public bool enableZoom = true;
+    public bool enableZoom = false;
     public bool holdToZoom = false;
     public KeyCode zoomKey = KeyCode.Mouse1;
     public float zoomFOV = 30f;
@@ -186,7 +186,7 @@ public class FirstPersonController : MonoBehaviour
 
             if(hideBarWhenFull)
             {
-                sprintBarCG.alpha = 0;
+                if (sprintBarCG != null) sprintBarCG.alpha = 0;
             }
         }
         else
@@ -228,54 +228,53 @@ public class FirstPersonController : MonoBehaviour
                 transform.localEulerAngles = new Vector3(0, yaw, 0);
                 playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
             }
+
+            #region Camera Zoom
+
+            if (enableZoom)
+            {
+                // Changes isZoomed when key is pressed
+                // Behavior for toogle zoom
+                if(Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting)
+                {
+                    if (!isZoomed)
+                    {
+                        isZoomed = true;
+                    }
+                    else
+                    {
+                        isZoomed = false;
+                    }
+                }
+
+                // Changes isZoomed when key is pressed
+                // Behavior for hold to zoom
+                if(holdToZoom && !isSprinting)
+                {
+                    if(Input.GetKeyDown(zoomKey))
+                    {
+                        isZoomed = true;
+                    }
+                    else if(Input.GetKeyUp(zoomKey))
+                    {
+                        isZoomed = false;
+                    }
+                }
+
+                // Lerps camera.fieldOfView to allow for a smooth transistion
+                if(isZoomed)
+                {
+                    playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, zoomFOV, zoomStepTime * Time.deltaTime);
+                }
+                else if(!isZoomed && !isSprinting)
+                {
+                    playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
+                }
+            }
+
+            #endregion
         }
-        
-
-        #region Camera Zoom
-
-        if (enableZoom)
-        {
-            // Changes isZoomed when key is pressed
-            // Behavior for toogle zoom
-            if(Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting)
-            {
-                if (!isZoomed)
-                {
-                    isZoomed = true;
-                }
-                else
-                {
-                    isZoomed = false;
-                }
-            }
-
-            // Changes isZoomed when key is pressed
-            // Behavior for hold to zoom
-            if(holdToZoom && !isSprinting)
-            {
-                if(Input.GetKeyDown(zoomKey))
-                {
-                    isZoomed = true;
-                }
-                else if(Input.GetKeyUp(zoomKey))
-                {
-                    isZoomed = false;
-                }
-            }
-
-            // Lerps camera.fieldOfView to allow for a smooth transistion
-            if(isZoomed)
-            {
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, zoomFOV, zoomStepTime * Time.deltaTime);
-            }
-            else if(!isZoomed && !isSprinting)
-            {
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
-            }
-        }
-
-        #endregion
-        #endregion
+#endregion
 
         #region Sprint
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1374384464962550485}
   - component: {fileID: 5016242527525224601}
   - component: {fileID: 7896454063572788887}
+  - component: {fileID: 3512240407913786220}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -101,3 +102,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fde84c690476074686ac6b5d9dac423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragDrop
+--- !u!114 &3512240407913786220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49500648432013103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ab23e39d92c4946b7223cd08e33bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  isTrashable: 0
+  thisName: Stone
+  thisDescription: A hard rock.
+  thisFunctionality: Crafting material
+  isConsumable: 0
+  healthEffect: 0
+  caloriesEffect: 0
+  isTool: 0
+  itemPrefab: {fileID: 0}

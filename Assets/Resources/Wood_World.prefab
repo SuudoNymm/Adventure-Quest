@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   ItemName: Wood
+  Amount: 1
+  canBePickedUp: 1
   PlayerInRange: 0
 --- !u!64 &4474494947405534959
 MeshCollider:
@@ -192,7 +194,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 1417593966032483645, guid: ac941fb4654507044b895742e02068b9, type: 3}
 --- !u!135 &5663939302318792753
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -25,26 +25,37 @@ public class SelectionManager : MonoBehaviour
         RaycastHit hit;
 
         // Ignore triggers on the first cast to avoid hitting our own range triggers or others
-        if (Physics.Raycast(ray, out hit, 10f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out hit, 15f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
         {
             var selectionTransform = hit.transform;
 
             InteractableObject interactable = selectionTransform.GetComponentInParent<InteractableObject>();
-            if (interactable && interactable.PlayerInRange)
+            if (interactable)
             {
                 interaction_text.text = interactable.GetItemName();
                 interaction_Info_UI.SetActive(true);
             }
             else if (selectionTransform.name == "Terrain" && treeReplacer != null)
             {
-                // Check if we are looking at a rock that can be replaced
-                if (Vector3.Distance(mainCam.transform.position, hit.point) <= treeReplacer.interactionDistance)
+                // Check if we are looking at a rock or tree that can be replaced
+                string terrainObjectName = treeReplacer.GetTargetName(ray);
+
+                if (!string.IsNullOrEmpty(terrainObjectName))
                 {
-                    treeReplacer.PerformRaycastReplacement(ray);
+                    interaction_text.text = terrainObjectName;
+                    interaction_Info_UI.SetActive(true);
+
+                    if (Vector3.Distance(mainCam.transform.position, hit.point) <= treeReplacer.interactionDistance)
+                    {
+                        treeReplacer.PerformRaycastReplacement(ray);
+                    }
                 }
-                interaction_Info_UI.SetActive(false);
+                else
+                {
+                    interaction_Info_UI.SetActive(false);
+                }
             }
-            else 
+else 
             {
                 interaction_Info_UI.SetActive(false);
             }
